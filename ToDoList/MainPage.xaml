@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoList.MainPage">
+    <ContentPage.Content>
+        <CollectionView x:Name="ToDoList"
+                        ItemsSource="{Binding taskModels}"
+                        SelectionChanged="ToDoList_SelectionChanged"
+                        SelectionMode="Single"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox IsChecked="{Binding Check}"
+                                  Grid.RowSpan="2"
+                                  Grid.Column="1"/>
+                        <Label Grid.RowSpan="2"
+                               Grid.Column="2"
+                               Text="{Binding Name}"
+                               FontAttributes="Bold"
+                               FontSize="15"/>
+                        <Label Grid.Column="3"
+                               Grid.Row="0"
+                               Text="{Binding Date}"
+                               FontAttributes="Bold"
+                               FontSize="10"/>
+                        <Label Grid.Column="3"
+                               Grid.Row="1"
+                               Text="{Binding Days}"
+                               FontAttributes="Bold"
+                               FontSize="10"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="Nu avem nimic pe ziua de azi, daca doresti adauga apasand pe plusaj"
+                       TextColor="PaleVioletRed"
+                       FontSize="Header"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>
