@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ToDoList.MainPage">
+             x:Class="ToDoList.MainPage"
+             BackgroundColor="ForestGreen"
+             Title="TasksList">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+"   Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <CollectionView x:Name="ToDoList"
                         ItemsSource="{Binding taskModels}"
@@ -23,18 +29,19 @@
                         </Grid.ColumnDefinitions>
                         <CheckBox IsChecked="{Binding Check}"
                                   Grid.RowSpan="2"
-                                  Grid.Column="1"/>
+                                  Grid.Column="0"/>
                         <Label Grid.RowSpan="2"
-                               Grid.Column="2"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="2"
                                Text="{Binding Name}"
                                FontAttributes="Bold"
                                FontSize="15"/>
-                        <Label Grid.Column="3"
+                        <Label Grid.Column="4"
                                Grid.Row="0"
                                Text="{Binding Date}"
                                FontAttributes="Bold"
                                FontSize="10"/>
-                        <Label Grid.Column="3"
+                        <Label Grid.Column="4"
                                Grid.Row="1"
                                Text="{Binding Days}"
                                FontAttributes="Bold"
@@ -47,6 +54,18 @@
                        TextColor="PaleVioletRed"
                        FontSize="Header"/>
             </CollectionView.EmptyView>
+            <CollectionView.Footer>
+            <Button Text="Delete All"
+                    FontSize="30"
+                    CornerRadius="23"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start"
+                    Margin="100"
+                    Clicked="Button_Clicked"
+                    BackgroundColor="DarkBlue"/>
+            </CollectionView.Footer>
         </CollectionView>
+        
     </ContentPage.Content>
 </ContentPage>
+

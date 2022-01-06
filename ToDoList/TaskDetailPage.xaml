@@ -1,37 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ToDoList.TaskDetailPage">
+             x:Class="ToDoList.TaskDetailPage"
+             BackgroundColor="CornflowerBlue">
+    
     <ContentPage.Content>
         <StackLayout>
+            <Frame 
+                   BackgroundColor="PaleVioletRed"
+                   Margin="20">
             <Entry
-                    Text="{Binding Name}"
+                  Text="{Binding Name}"
                     FontAttributes="Bold"
-                    FontSize="15"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"/>
+                    FontSize="20"
+                    VerticalOptions="Start"
+                    BackgroundColor="DarkOrange"
+                    TextColor="DarkBlue"
+                    Placeholder="Introduceti aici Taskul dumneavoastra"/>
+            </Frame>
+            <DatePicker x:Name="DatePicker"
+                        Date="{Binding Date}"
+                        Format="D"
+                        Margin="30"
+                        HorizontalOptions="Center"
+                        DateSelected="DatePicker_DateSelected"/>
 
-            <Label 
-                    Text="{Binding Data}"
-                    FontAttributes="Bold"
-                    FontSize="15"
+            <Button Text="SaveTask"
+                    BackgroundColor="Purple"
+                    TextColor="Orange"
+                    Margin="30"
                     VerticalOptions="Center"
-                    HorizontalOptions="Center"/>
-            
-            <Label 
-                    Text="{Binding Days}"
-                    FontAttributes="Bold"
-                    FontSize="15"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"/>
-            
-            <Label 
-                    Text="{Binding Check}"
-                    FontAttributes="Bold"
-                    FontSize="15"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"/>
-            
+                    HorizontalOptions="CenterAndExpand"
+                    Clicked="Button_Clicked"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

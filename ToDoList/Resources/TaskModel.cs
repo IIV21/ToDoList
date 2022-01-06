@@ -16,6 +16,8 @@ namespace ToDoList.Resources
         public int Days { get; set; }
 
         public bool Check { get; set; }
+
+        public string Details { get; set; }
         
     }
 }

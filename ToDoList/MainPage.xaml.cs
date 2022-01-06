@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ToDoList
         {
             new TaskModel
             { 
-                Name = "asd",
+                Name = "asasdasdasdasdsad",
                 Date = "29.01.2019",
                 Days = 23,
                 Check = true
@@ -44,18 +45,42 @@ namespace ToDoList
                 Check = true
             }
         };
+        public ObservableCollection<TaskModel> taskList { get; set; }
+
         public string Name { get; set; }
         public MainPage()
         {
 
             InitializeComponent();
+
+            Task.Run(async () =>
+            {
+                taskModels = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
+            }).Wait();
+
             BindingContext = this;
         }
 
-        private void ToDoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ToDoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var task = e.CurrentSelection.FirstOrDefault() as TaskModel;
-            Navigation.PushAsync(new TaskDetailPage(task));
+
+            if (task == null)
+                return;
+
+            await Navigation.PushAsync(new TaskDetailPage{ BindingContext = task});
+
+            ((CollectionView)sender).SelectedItem = null;
+        }
+
+        private async void  ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+           await Navigation.PushAsync(new TaskDetailPage(new TaskModel()));
+        }
+
+        private async void  Button_Clicked(object sender, EventArgs e)
+        {
+            await Service.DatabaseConnection.DeleteAllTask(BindingContext as TaskModel);
         }
     }
 }
