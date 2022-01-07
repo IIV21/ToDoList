@@ -55,10 +55,17 @@ namespace ToDoList
 
             Task.Run(async () =>
             {
-                taskModels = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
+                taskList = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
             }).Wait();
 
             BindingContext = this;
+        }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            taskList = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
+            ToDoList.ItemsSource = taskList;
         }
 
         private async void ToDoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -81,6 +88,8 @@ namespace ToDoList
         private async void  Button_Clicked(object sender, EventArgs e)
         {
             await Service.DatabaseConnection.DeleteAllTask(BindingContext as TaskModel);
+            taskList = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
+            ToDoList.ItemsSource = taskList;
         }
     }
 }

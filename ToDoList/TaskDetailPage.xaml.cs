@@ -33,7 +33,13 @@ namespace ToDoList
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            await Service.DatabaseConnection.AddTask(BindingContext as TaskModel);
+            var task = BindingContext as TaskModel;
+            if (task.Id == 0)
+                await Service.DatabaseConnection.AddTask(BindingContext as TaskModel);
+            else
+              await Service.DatabaseConnection.UpdateTask(BindingContext as TaskModel);
+
+
             await Navigation.PopAsync();
 
         }
