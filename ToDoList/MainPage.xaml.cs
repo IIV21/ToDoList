@@ -54,15 +54,13 @@ namespace ToDoList
             BindingContext = this;
         }
 
-
-
-
         protected async override void OnAppearing()
         {
             base.OnAppearing();
             taskList = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
             ToDoList.ItemsSource = taskList;
-            
+            NumberOfTasks = taskList.Count;
+            NumberOfTasksLabel.Text = "Number of Tasks: " + NumberOfTasks.ToString();
         }
 
         private async void ToDoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -86,6 +84,8 @@ namespace ToDoList
             await Service.DatabaseConnection.DeleteAllTask(BindingContext as TaskModel);
             taskList = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
             ToDoList.ItemsSource = taskList;
+            NumberOfTasks = taskList.Count;
+            NumberOfTasksLabel.Text = "Number of Tasks: " + NumberOfTasks.ToString();
         }
 
         private async void myRefreshView_Refreshing(object sender, EventArgs e)
@@ -93,6 +93,14 @@ namespace ToDoList
             await Task.Delay(500);
             myRefreshView.IsRefreshing = false;
             OnAppearing();
+        }
+
+        private void CheckedButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if((sender as CheckBox).IsChecked)
+            {
+               
+            }
         }
     }
 }

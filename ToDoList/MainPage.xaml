@@ -12,39 +12,42 @@
     <ContentPage.Content>
         <RefreshView x:Name="myRefreshView" RefreshColor="#2196F3"
                  Refreshing="myRefreshView_Refreshing">
-        <CollectionView x:Name="ToDoList"
+            <CollectionView x:Name="ToDoList"
                         ItemsSource="{Binding taskModels}"
                         SelectionChanged="ToDoList_SelectionChanged"
                         SelectionMode="Single"
                         VerticalOptions="Center"
                         HorizontalOptions="Center">
-            <CollectionView.Header>
+                <CollectionView.Header>
                     <Frame BackgroundColor="Aquamarine" Margin="20">
-                <ContentView>
-                            <Label Text="{Binding NumberOfTasks,StringFormat='TotalTasks: {0:D}'}" FontSize="25" Margin="2" TextColor="Black" 
-                           HorizontalOptions="Center"/>
-                </ContentView>
+                        <ContentView>
+                            <Label x:Name="NumberOfTasksLabel"
+                                   Text="{Binding NumberOfTasks,StringFormat='TotalTasks: {0:D}'}"
+                                   FontSize="25" Margin="2" TextColor="Black" 
+                                   HorizontalOptions="Center"/>
+                        </ContentView>
                     </Frame>
                 </CollectionView.Header>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10">
-                        <Grid.RowDefinitions>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="Checked"
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="CheckedBox"
+                                  CheckedChanged="CheckedButton_CheckedChanged"
                                   IsChecked="{Binding Check}"
                                   Grid.RowSpan="1"
                                   Grid.Column="0"
                                   VerticalOptions="Center"/>
-                        
-                        <Frame Grid.Column="1"
+
+                            <Frame Grid.Column="1"
                                Grid.Row="0"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
@@ -52,40 +55,96 @@
                                Margin="10"
                                BackgroundColor="RoyalBlue">
 
-                        <Label Grid.RowSpan="1"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
-                               Grid.Column="1"
-                               Grid.ColumnSpan="2"
-                               Text="{Binding Name}"
-                               TextColor="DarkBlue"
-                               FontAttributes="Italic"
-                               FontSize="15"/>
-                        </Frame>
-                        <Label Grid.Column="5"
+                                <Label x:Name="NameLabel"
+                                       Grid.RowSpan="1"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       Grid.Column="1"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding Name}"
+                                       TextColor="DarkBlue"
+                                       FontAttributes="Italic"
+                                       FontSize="15">
+
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Source= {x:Reference CheckedBox}, Path = IsChecked}"
+                                                 Value="false">
+                                            <Setter Property="TextDecorations"
+                                                Value="None"/>
+
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Source= {x:Reference CheckedBox}, Path = IsChecked}"
+                                                 Value="true">
+                                            <Setter Property="TextDecorations"
+                                                Value="Strikethrough"/>
+
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Frame>
+                            <Label Grid.Column="5"
                                Grid.ColumnSpan="1"
                                Grid.Row="0"
-                               Text="{Binding Date}"
+                               Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
                                FontAttributes="Bold"
-                               FontSize="15"/>
-                        <Label Grid.Column="5"
+                               FontSize="15">
+                                <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Source= {x:Reference CheckedBox}, Path = IsChecked}"
+                                                 Value="false">
+                                    <Setter Property="TextDecorations"
+                                                Value="None"/>
+
+                                </DataTrigger>
+
+                                <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Source= {x:Reference CheckedBox}, Path = IsChecked}"
+                                                 Value="true">
+                                    <Setter Property="TextDecorations"
+                                                Value="Strikethrough"/>
+
+                                </DataTrigger>
+                            </Label.Triggers>
+                            </Label>
+                            <Label Grid.Column="5"
                                Grid.Row="0"
                                VerticalOptions="Center"
-                               Text="{Binding Days, StringFormat=Days: {0}}"
+                               Text="{Binding ShowDays, StringFormat='{Days: 0:D}'}"
                                FontAttributes="Bold"
-                               FontSize="10"/>
-                    </Grid>
-                </DataTemplate> 
-            </CollectionView.ItemTemplate>
-            <CollectionView.EmptyView>
+                               FontSize="10">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Source= {x:Reference CheckedBox}, Path = IsChecked}"
+                                                 Value="false">
+                                        <Setter Property="TextDecorations"
+                                                Value="None"/>
+
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Source= {x:Reference CheckedBox}, Path = IsChecked}"
+                                                 Value="true">
+                                    <Setter Property="TextDecorations"
+                                                Value="Strikethrough"/>
+
+                                </DataTrigger>
+                            </Label.Triggers>
+                            </Label>
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
                     <Frame>
-                    <Label Text="No Tasks today, Hit + to add some"
+                        <Label Text="No Tasks today, Hit + to add some"
                            VerticalOptions="Center"
                        TextColor="DarkOrange"
                        FontSize="Header"/>
                     </Frame>
                 </CollectionView.EmptyView>
-            <CollectionView.Footer>
+                <CollectionView.Footer>
                     <Frame BackgroundColor="Aquamarine" Margin="20">
                         <Button Text="Delete All Tasks"
                                 FontSize="30"
@@ -94,10 +153,11 @@
                                 Margin="20"
                                 Clicked="Button_Clicked"
                                 BackgroundColor="Aquamarine"
-                                TextColor="Black"/> 
+                                TextColor="Black"/>
                     </Frame>
+
                 </CollectionView.Footer>
-        </CollectionView>
+            </CollectionView>
         </RefreshView>
     </ContentPage.Content>
 </ContentPage>

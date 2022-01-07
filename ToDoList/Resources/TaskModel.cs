@@ -18,5 +18,10 @@ namespace ToDoList.Resources
         public bool Check { get; set; }
 
         public string Details { get; set; }
+
+        public string ShowDays //=>
+        { get {return $"{Days} Days"; } }
+
+
     }
 }

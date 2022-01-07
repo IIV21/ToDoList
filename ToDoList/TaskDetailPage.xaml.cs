@@ -37,12 +37,25 @@ namespace ToDoList
 
             task.Days = (task.Date - DateTime.Now).TotalDays;
             task.Days = Math.Truncate(task.Days * 100) / 100;
+            
+            if (task.Name == null)
+            {
+                ErrorLabel.IsVisible = true;
+                return;
+            }
+
 
             if (task.Id == 0)
                 await Service.DatabaseConnection.AddTask(BindingContext as TaskModel);
             else
                 await Service.DatabaseConnection.UpdateTask(BindingContext as TaskModel);
 
+            await Navigation.PopAsync();
+        }
+
+        private async void Button_Clicked_1(object sender, EventArgs e)
+        {
+            await Service.DatabaseConnection.DeleteTask(BindingContext as TaskModel);
             await Navigation.PopAsync();
         }
     }

@@ -7,20 +7,20 @@
     <ContentPage.Content>
         <StackLayout>
             <Frame 
-                   BackgroundColor="PaleVioletRed"
+                   BackgroundColor="RoyalBlue"
                    Margin="20">
             <Entry
                   Text="{Binding Name}"
-                    FontAttributes="Bold"
+                    FontAttributes="Italic"
                     FontSize="20"
                     VerticalOptions="Start"
-                    BackgroundColor="DarkOrange"
-                    TextColor="DarkBlue"
+                    BackgroundColor="Purple"
+                    TextColor="Orange"
                     Placeholder="Introduceti aici Taskul dumneavoastra"/>
             </Frame>
             <DatePicker x:Name="DatePicker"
                         MinimumDate="01 29,2019"
-                        Date="{Binding Date, StringFormat='{MMMM dd, yyyy}'}"
+                        Date="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
                         Format="d"
                         Margin="30"
                         HorizontalOptions="Center"
@@ -29,10 +29,27 @@
             <Button Text="SaveTask"
                     BackgroundColor="Purple"
                     TextColor="Orange"
-                    Margin="30"
+                    Margin="20"
                     VerticalOptions="Center"
                     HorizontalOptions="CenterAndExpand"
                     Clicked="Button_Clicked"/>
+
+            <Button Text="DeleteTask"
+                    BackgroundColor="Purple"
+                    TextColor="Orange"
+                    Margin="10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="CenterAndExpand"
+                    Clicked="Button_Clicked_1"/>
+
+
+            <Label x:Name="ErrorLabel"
+                  Text="Pai ce facem sefule, ai taskaj sau n ai taskaj"
+                   IsVisible="False"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   FontSize="20"/>
+            
 
         </StackLayout>
     </ContentPage.Content>
