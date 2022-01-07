@@ -38,7 +38,7 @@ namespace ToDoList
             }
         };
         public ObservableCollection<TaskModel> taskList { get; set; }
-        public static int NumberOfTasks { get; set; }
+        public int NumberOfTasks { get; set; }
         public MainPage()
         {
 
@@ -48,6 +48,8 @@ namespace ToDoList
             {
                 taskList = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
             }).Wait();
+
+            NumberOfTasks = taskList.Count;
 
             BindingContext = this;
         }
@@ -60,12 +62,12 @@ namespace ToDoList
             base.OnAppearing();
             taskList = new ObservableCollection<TaskModel>(await Service.DatabaseConnection.GetTasks());
             ToDoList.ItemsSource = taskList;
+            
         }
 
         private async void ToDoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var task = e.CurrentSelection.FirstOrDefault() as TaskModel;
-
             if (task == null)
                 return;
 
