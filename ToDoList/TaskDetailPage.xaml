@@ -19,8 +19,9 @@
                     Placeholder="Introduceti aici Taskul dumneavoastra"/>
             </Frame>
             <DatePicker x:Name="DatePicker"
-                        Date="{Binding Date}"
-                        Format="D"
+                        MinimumDate="01 29,2019"
+                        Date="{Binding Date, StringFormat='{MMMM dd, yyyy}'}"
+                        Format="d"
                         Margin="30"
                         HorizontalOptions="Center"
                         DateSelected="DatePicker_DateSelected"/>

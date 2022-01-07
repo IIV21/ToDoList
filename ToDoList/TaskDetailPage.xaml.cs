@@ -17,7 +17,7 @@ namespace ToDoList
             InitializeComponent();
         }
 
-        public int counter=0;
+        public int counter = 0;
 
         public TaskDetailPage(Resources.TaskModel task)
         {
@@ -34,14 +34,16 @@ namespace ToDoList
         private async void Button_Clicked(object sender, EventArgs e)
         {
             var task = BindingContext as TaskModel;
+
+            task.Days = (task.Date - DateTime.Now).TotalDays;
+            task.Days = Math.Truncate(task.Days * 100) / 100;
+
             if (task.Id == 0)
                 await Service.DatabaseConnection.AddTask(BindingContext as TaskModel);
             else
-              await Service.DatabaseConnection.UpdateTask(BindingContext as TaskModel);
-
+                await Service.DatabaseConnection.UpdateTask(BindingContext as TaskModel);
 
             await Navigation.PopAsync();
-
         }
     }
 }
